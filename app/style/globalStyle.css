@@ -71,5 +71,15 @@ hr{
     
 }
 
+.postForm{
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 400px;
+    height: 400px;
+    margin: 40px;
+
+}
 
 
