@@ -82,4 +82,12 @@ hr{
 
 }
 
+.postForm label{
+    color: white;
+} 
+
+.bigField{
+    height: 80px;
+}
+
 
