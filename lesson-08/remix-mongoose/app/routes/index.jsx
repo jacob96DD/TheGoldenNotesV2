@@ -30,12 +30,14 @@ export default function Index() {
 
         <div className="snippets">
             <h2>Snippets</h2>     
+            <button></button>
             <input className="search" type="text" placeholder="search"/>
               <ul>
                   {notes.map((note, i) => {
                     return (
                         <li  className="snipresume" key={note._id} onClick={() =>toggle(i)}>
                             <label>{note.title}</label>
+
                         </li>
                     );
                   })}
