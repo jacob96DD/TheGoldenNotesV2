@@ -13,6 +13,7 @@ export default function BookPage() {
       <h1 className="text-2xl font-bold mb-4">{book.title}</h1>
       <code>
         <pre>{JSON.stringify(book, null, 2)}</pre>
+
       </code>
     </div>
   );

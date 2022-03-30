@@ -1,0 +1,75 @@
+body{
+    background-color: #353535;
+    color: #f9f9f9;
+}
+
+hr{
+    background-color: red;
+    color: red;  
+ }
+
+.main{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.language{
+    width: 15%;
+    justify-content: center;
+    border: black;
+}
+
+.language h1{
+    text-align: center;
+}
+
+.snippets{
+    background: #454545;
+    width: 15%;
+}
+.snippets h2{
+    text-align: center;
+}
+    .search{
+        color: white;
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+        width: 90%;
+        border-radius: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: gray;
+    }
+
+.snipresume{
+    height: 50px;
+    border: 1px solid #353535;
+    background-color: #555555;
+}
+
+
+.snippetfield{
+  
+}
+
+.snippetfield h2{
+    text-align: center;
+}
+
+    
+.content{
+    background: #555555;
+    width: 70%;
+    height: 100vh;
+}
+
+.textfield{
+    background: red;
+    
+}
+
+
+

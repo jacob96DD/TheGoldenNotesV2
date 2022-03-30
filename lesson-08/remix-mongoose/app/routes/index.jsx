@@ -1,34 +1,68 @@
-import { useLoaderData, Link } from "remix";
+import { useLoaderData} from "remix";
 import connectDb from "~/db/connectDb.server.js";
+import React, {useState} from "react";
 
 export async function loader() {
   const db = await connectDb();
-  const books = await db.models.Book.find();
-  return books;
+  const notes = await db.models.Note.find();
+  return notes;
+
+
 }
 
 export default function Index() {
-  const books = useLoaderData();
+  const notes = useLoaderData();
+  const [showSnip, setSnip] = useState(null);
 
+  const toggle = (i) => {
+    if (showSnip ==i){
+      return setSnip(null)
+    }
+    setSnip(i);
+    console.log(notes);
+  }
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Remix + Mongoose</h1>
-      <h2 className="text-lg font-bold mb-3">
-        Here are a few of my favorite books:
-      </h2>
-      <ul className="ml-5 list-disc">
-        {books.map((book) => {
-          return (
-            <li key={book._id}>
-              <Link
-                to={`/books/${book._id}`}
-                className="text-blue-600 hover:underline">
-                {book.title}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+    <div className="main">
+        <div className="language">
+          <h1 className="text-1xl font-bold">Lanuguage</h1>
+  
+        </div>
+
+        <div className="snippets">
+            <h2>Snippets</h2>     
+            <input className="search" type="text" placeholder="search"/>
+              <ul>
+                  {notes.map((note, i) => {
+                    return (
+                        <li  className="snipresume" key={note._id} onClick={() =>toggle(i)}>
+                            <label>{note.title}</label>
+                        </li>
+                    );
+                  })}
+              </ul>
+        </div>
+
+        <div className="content">
+                <div className="snippetfield">
+                  <h2>Code</h2>
+
+                  {notes.map((note, i) => {
+                    return (
+                      <div className={showSnip == i ? 'block' : 'hidden'}  key={note._id} id={note._id}>
+                        <h2>{note.title}</h2>
+                            <h3>language: {note.language}</h3><br></br>
+                            <p>Code: {note.code}</p><br></br>
+                            <h3>Description: {note.description}</h3>
+                            
+
+
+                      </div>
+                      );
+                  })}
+                
+                </div>
+
+        </div>
     </div>
   );
 }

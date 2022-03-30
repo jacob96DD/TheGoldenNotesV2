@@ -2,14 +2,19 @@ import { mongoose } from "mongoose";
 
 const { Schema } = mongoose;
 
-const bookSchema = new Schema({
+const goldenSchema = new Schema({
+  language: String,
   title: String,
+  code: String,
+  fav: Boolean,
+  description: String,
+
 });
 
 export const models = [
   {
-    name: "Book",
-    schema: bookSchema,
-    collection: "books",
+    name: "Note",
+    schema: goldenSchema,
+    collection: "theGoldenNotes",
   },
 ];

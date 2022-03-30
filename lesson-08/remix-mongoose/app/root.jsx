@@ -8,11 +8,16 @@ import {
   ScrollRestoration,
 } from "remix";
 import styles from "~/tailwind.css";
+import globalStyles from "~/style/globalStyle.css";
 
 export const links = () => [
   {
     rel: "stylesheet",
     href: styles,
+  },
+  {
+    rel: "stylesheet",
+    href: globalStyles,
   },
 ];
 
@@ -31,12 +36,8 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="bg-slate-100 text-slate-800 font-sans p-4">
-        <header className="pb-3 mb-4 border-b-2">
-          <Link to="/" className="hover:underline text-blue-600">
-            Home
-          </Link>
-        </header>
+      <body>
+       
         <Outlet />
         <ScrollRestoration />
         <Scripts />
