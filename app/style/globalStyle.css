@@ -14,20 +14,17 @@ hr{
     width: 100%;
 }
 
-.language{
-    width: 15%;
-    justify-content: center;
-    border: black;
-}
-
-.language h1{
-    text-align: center;
-}
-
 .snippets{
     background: #454545;
-    width: 15%;
+    width: 25%;
 }
+
+.sniphead{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .snippets h2{
     text-align: center;
 }
@@ -45,9 +42,12 @@ hr{
     }
 
 .snipresume{
-    height: 50px;
     border: 1px solid #353535;
     background-color: #555555;
+}
+
+.snipresume label{
+  margin-left: 10px;
 }
 
 
@@ -59,10 +59,20 @@ hr{
     text-align: center;
 }
 
+.icons{
+    height: 20px;
+    
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin: 10px 10px 10px 10px;
+}
+
     
 .content{
     background: #555555;
-    width: 70%;
+    width: 75%;
     height: 100vh;
 }
 
@@ -90,4 +100,8 @@ hr{
     height: 80px;
 }
 
+.deletebutton button{
+   
+   background-color: red;
+}
 

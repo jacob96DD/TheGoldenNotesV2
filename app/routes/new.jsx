@@ -2,37 +2,26 @@ import { Link, redirect, useActionData, Form, json } from "remix";
 import Button from "~/components/Button.jsx";
 import connectDb from "~/db/connectDb.server.js";
 
-export const action = async ({ request }) => {
-    const formData = await request.formData();
-  
-    const language = formData.get("language");
-    const title = formData.get("title");
-    const code = formData.get("code");
-    const description = formData.get("description");
-  
-    const errors = {};
-    if (!title) errors.title = true;
-    if (!description) errors.description = true;
-  
-    if (Object.keys(errors).length) {
-      const values = Object.fromEntries(formData);
-      return json({ errors, values });
-    }
-  
-    await fetch(`http://localhost:3000/api/kids-fashion/`, {
-      method: "POST",
-      body: JSON.stringify({ title, description, id: uuid }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    // TODO: Make a POST request via fetch to an API route that receives JSON data
-    // and creates the product in the db
-    // throw new Error("POST handler not implemented");
-  
-    return redirect(`../`);
-  };
 
+  export async function action({ request }) {
+    const form = await request.formData();
+    const db = await connectDb();
+    try {
+      const newSnippet = await db.models.Note.create({ 
+        title: form.get("title"),
+        language: form.get("language"),
+        title: form.get("title"),
+        code: form.get("code"),
+        description: form.get("description")
+        });
+      return redirect(`/`);
+    } catch (error) {
+      return json(
+        { errors: error.errors, values: Object.fromEntries(form) },
+        { status: 400 }
+      );
+    }
+  }
 
   export default function NewSnippet() {
     const actionData = useActionData();
