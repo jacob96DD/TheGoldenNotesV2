@@ -7,7 +7,20 @@ import connectDb from "~/db/connectDb.server.js";
   export async function action({ request }) {
     const form = await request.formData();
     const db = await connectDb();
-    const id = form.get("id");
+    const id = form._fields.id;
+    
+    
+    // if(action === "delete"){
+    //     try {
+    //         await db.models.note.deleteOne({_id: id});
+    //         return redirect(`/`);
+    //     } catch (error) {
+    //       return json(
+    //         { errors: error.errors, values: Object.fromEntries(form) },
+    //         { status: 400 }
+    //       );
+    //     }
+    //   }else{
     
 
     try {
@@ -25,7 +38,7 @@ import connectDb from "~/db/connectDb.server.js";
       );
     }
   }
-
+// }
 
 export async function loader({params}) {
     const db = await connectDb();

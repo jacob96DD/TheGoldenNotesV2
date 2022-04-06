@@ -12,3 +12,18 @@ export async function action({request}){
     return redirect(`/`);
 
 }
+
+// const id = form._fields.id;
+    
+    
+// if(action === "delete"){
+//     try {
+//         await db.models.note.deleteOne({_id: id});
+//         return redirect(`/`);
+//     } catch (error) {
+//       return json(
+//         { errors: error.errors, values: Object.fromEntries(form) },
+//         { status: 400 }
+//       );
+//     }
+//   }else{
