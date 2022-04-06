@@ -10,9 +10,9 @@ import connectDb from "~/db/connectDb.server.js";
       const newSnippet = await db.models.Note.create({ 
         title: form.get("title"),
         language: form.get("language"),
-        title: form.get("title"),
         code: form.get("code"),
-        description: form.get("description")
+        description: form.get("description"),
+        fav: false
         });
       return redirect(`/`);
     } catch (error) {

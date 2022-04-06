@@ -41,6 +41,20 @@ hr{
         background-color: gray;
     }
 
+.sort{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}    
+.Sort Button{
+    
+    margin: 9px;
+    height: 30px;
+    background-color: #555555;
+    width: 28%;
+    font-size: 11px;
+
+}
 .snipresume{
     border: 1px solid #353535;
     background-color: #555555;
