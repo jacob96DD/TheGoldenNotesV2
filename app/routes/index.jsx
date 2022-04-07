@@ -5,38 +5,46 @@ import Button from "~/components/Button.jsx";
 
 export async function loader({ request }) {
   const db = await connectDb();
-  const notes = await db.models.Note.find();
-  let snippets;
-  const url = new URL(request.url);
-  const action = url.searchParams.get("title");
+  let notes;
+  
+  const url = new URL(await request.url);
+  const action = url.searchParams.get("_action");
   const query = url.searchParams.get("query");
   if (query) {
-    snippets = await db.models.Note.find(
+    notes = await db.models.Note.find(
       query
         ? {
-            title: { $regex: new RegExp(query, "i") },
+          title: { $regex: new RegExp(query, "i") },
+          
           }
+
         : {}
-    );
-  } else if (action) {
-    snippets = await db.models.Note.find().sort({
-      title: 1,
-    });
-  } else {
-    snippets = db.models.Note.find();
-    return snippets;
+    )
+  } else if (action=="title") {
+    notes = await db.models.Note.find()
+      .sort({
+      title: -1
+    })
+  } 
+  else if (action=="update") {
+    notes = await db.models.Note.find()
+      .sort({
+      _id: -1
+    })
   }
 
-  return notes.filter((snippet) =>
-  query ? snippet.title.toLowerCase().includes(query.toLowerCase()) : true
-);
-  
-}
+  else if (action=="fav") {
+    notes = await db.models.Note.find({fav:true})
+  }
+  else {
+    notes= await db.models.Note.find()}
+    return notes;}
 
 export async function action({ request }) {
   const form = await request.formData();
   const db = await connectDb();
-  let { title, id, ...values } = Object.fromEntries(form);
+  let formData = await request.formData();
+  let { _action, id, ...values } = Object.fromEntries(formData);
 
   const actionType = form.get("_action");
   const noteId = form.get("id");
@@ -106,16 +114,16 @@ export default function Index() {
           <button type="submit">search</button>
         </Form>
         <div className="Sort">
-          <Form>
-            <Button type="submit" name="_title" value="sortTitle">
+          <Form method="get">
+            <button type="submit" name="_action" value="title">
               Title
-            </Button>
-            <Button type="submit" name="_update" value="lastUpdate">
+            </button>
+            <button type="submit" name="_action" value="Update">
               Last Update
-            </Button>
-            <Button type="submit" name="_favorite" value="sortFav">
+            </button>
+            <button type="submit" name="_action" value="fav">
               Favorite
-            </Button>
+            </button>
           </Form>
         </div>
         <ul>
