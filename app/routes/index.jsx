@@ -1,44 +1,52 @@
-import { useLoaderData, Link, Form, json, useSearchParams } from "remix";
+import {
+  useLoaderData,
+  Link,
+  Form,
+  json,
+  useSearchParams,
+  redirect,
+} from "remix";
+import { getSession, commitSession } from "~/session.js";
 import connectDb from "~/db/connectDb.server.js";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import Button from "~/components/Button.jsx";
 
 export async function loader({ request }) {
+  const session = await getSession(request.headers.get("Cookie"));
   const db = await connectDb();
   let notes;
-  
   const url = new URL(await request.url);
   const action = url.searchParams.get("_action");
   const query = url.searchParams.get("query");
-  if (query) {
-    notes = await db.models.Note.find(
-      query
-        ? {
-          title: { $regex: new RegExp(query, "i") },
-          
-          }
 
-        : {}
-    )
-  } else if (action=="title") {
-    notes = await db.models.Note.find()
-      .sort({
-      title: -1
-    })
-  } 
-  else if (action=="update") {
-    notes = await db.models.Note.find()
-      .sort({
-      _id: -1
-    })
-  }
-
-  else if (action=="fav") {
-    notes = await db.models.Note.find({fav:true})
-  }
-  else {
-    notes= await db.models.Note.find()}
-    return notes;}
+  if (session.has("userId")) {
+    if (query) {
+      notes = await db.models.Note.find(
+        query
+          ? {
+              title: { $regex: new RegExp(query, "i") },
+            }
+          : {}
+      );
+    } else if (action == "title") {
+      notes = await db.models.Note.find().sort({
+        title: -1,
+      });
+    } else if (action == "update") {
+      notes = await db.models.Note.find().sort({
+        _id: -1,
+      });
+    } else if (action == "fav") {
+      notes = await db.models.Note.find({ fav: true });
+    } else {
+      notes = await db.models.Note.find();
+    }
+    return notes;
+    
+  } else { 
+    return redirect("/login")
+    }
+}
 
 export async function action({ request }) {
   const form = await request.formData();

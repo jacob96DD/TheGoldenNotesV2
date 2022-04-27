@@ -11,10 +11,25 @@ const goldenSchema = new Schema({
 
 });
 
+const Login = new Schema({
+  username: String,
+  password: String,
+});
+
+
 export const models = [
   {
     name: "Note",
     schema: goldenSchema,
     collection: "theGoldenNotes",
   },
+  {
+    name: "User",
+    schema: Login,
+    collection: "Login",
+  }
 ];
+
+
+
+
